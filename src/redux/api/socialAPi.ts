@@ -40,10 +40,10 @@ export const socialApi = baseApi.injectEndpoints({
     }),
 
     updateSocial: build.mutation({
-      query: (data) => ({
-        url: `/socials/${data.id}`,
+      query: ({id,...values}) => ({
+        url: `/socials/${id}`,
         method: "PATCH",
-        data: data.body,
+        data: values,
       }),
       invalidatesTags: [tagTypes.social],
     }),
