@@ -1,6 +1,9 @@
 import type { Metadata } from "next";
 import { Inter } from "next/font/google";
 import "./globals.css";
+import Providers from "@/lib/providers/Providers";
+import { Toaster } from "sonner";
+import { AppRouterCacheProvider } from "@mui/material-nextjs/v13-appRouter";
 
 const inter = Inter({ subsets: ["latin"] });
 
@@ -15,8 +18,18 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   return (
-    <html lang="en">
-      <body className={inter.className}>{children}</body>
-    </html>
+    <Providers>
+      <html lang="en">
+        <body className={inter.className}>
+          <AppRouterCacheProvider>
+            <>
+              <Toaster position="top-center" richColors />
+
+              {children}
+            </>
+          </AppRouterCacheProvider>
+        </body>
+      </html>
+    </Providers>
   );
 }
