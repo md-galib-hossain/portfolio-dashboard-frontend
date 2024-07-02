@@ -1,4 +1,19 @@
 /** @type {import('next').NextConfig} */
-const nextConfig = {};
+const nextConfig = {
+    images : {
+        remotePatterns : [
+            {
+                protocol : "https",
+                hostname : "**"
+            }
+        ]
+    },
+    rules: {
+        "react/no-unescaped-entities": "off",
+      },
+      eslint: {
+        ignoreDuringBuilds: false,
+      },
+}
 
-export default nextConfig;
+module.exports = nextConfig

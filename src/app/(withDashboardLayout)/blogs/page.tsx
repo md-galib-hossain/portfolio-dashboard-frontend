@@ -12,7 +12,7 @@ const BlogPage = () => {
   const [selectedBlog, setSelectedBlog] = useState<any>(null);
 
   if (isLoading) {
-    return <div>Loading...</div>;
+    return <Typography>Loading...</Typography>;
   }
 
   const handleAddmoreImage = (blog: any) => {
