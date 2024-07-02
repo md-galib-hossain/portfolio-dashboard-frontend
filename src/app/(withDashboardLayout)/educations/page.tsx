@@ -1,9 +1,10 @@
 "use client";
+import dynamic from 'next/dynamic';
 import React, { useState } from 'react';
 import { Box, Button, Grid, Container, Typography, Card, CardContent } from '@mui/material';
 import { useGetAllEducationsQuery } from '@/redux/api/educationApi';
-import EducationModal from './components/EducationModal';
 
+const EducationModal = dynamic(() => import('./components/EducationModal'), { ssr: false })
 const EducationPage = () => {
   const { data: educations, isLoading, isSuccess } = useGetAllEducationsQuery({});
   const [isModalOpen, setIsModalOpen] = useState<boolean>(false);

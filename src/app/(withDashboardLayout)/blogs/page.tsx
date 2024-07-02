@@ -1,9 +1,12 @@
 "use client"
 import React, { useState } from 'react';
+import dynamic from 'next/dynamic';
+
 import { Box, Button, Grid, Container, Typography, Card, CardContent, CardMedia } from '@mui/material';
 import { useGetAllBlogsQuery } from '@/redux/api/blogApi'; 
-import BlogPostModal from './components/BlogPostModal'; 
-import MoreImageModal from './components/MoreImageModal'; 
+
+const BlogPostModal = dynamic(() => import('./components/BlogPostModal'), { ssr: false });
+const MoreImageModal = dynamic(() => import('./components/MoreImageModal'), { ssr: false })
 
 const BlogPage = () => {
   const { data: blogs, isLoading, isSuccess } = useGetAllBlogsQuery({});

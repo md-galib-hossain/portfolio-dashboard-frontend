@@ -1,9 +1,13 @@
 "use client";
+import dynamic from 'next/dynamic';
+
 import React, { useState } from 'react';
 import { Box, Button, Grid, Container, Typography, Card, CardContent } from '@mui/material';
 import { useGetAllSkillsQuery } from '@/redux/api/skillApi';
 import SkillModal from './components/SkillModal';
 
+
+const MoreImageMSkillModalodal = dynamic(() => import('./components/SkillModal'), { ssr: false })
 const SkillsPage = () => {
   const { data: skills, isLoading, isSuccess } = useGetAllSkillsQuery({});
   const [isModalOpen, setIsModalOpen] = useState<boolean>(false);

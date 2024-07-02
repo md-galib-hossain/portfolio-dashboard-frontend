@@ -1,14 +1,34 @@
 "use client";
-import React, { useState } from 'react';
-import { Box, Button, Grid, Container, Typography, Card, CardContent, CardMedia } from '@mui/material';
-import { useGetAllProjectsQuery, useUpdateProjectMutation } from '@/redux/api/projectApi';
-import ProjectModal from './components/ProjectModal ';
-import MoreImageModal from './components/MoreImageModal';
+import dynamic from "next/dynamic";
+
+import React, { useState } from "react";
+import {
+  Box,
+  Button,
+  Grid,
+  Container,
+  Typography,
+  Card,
+  CardContent,
+  CardMedia,
+} from "@mui/material";
+import {
+  useGetAllProjectsQuery,
+  useUpdateProjectMutation,
+} from "@/redux/api/projectApi";
+
+const ProjectModal = dynamic(() => import("./components/ProjectModal "), {
+  ssr: false,
+});
+const MoreImageModal = dynamic(() => import("./components/MoreImageModal"), {
+  ssr: false,
+});
 
 const ProjectsPage = () => {
   const { data: projects, isLoading, isSuccess } = useGetAllProjectsQuery({});
   const [isModalOpen, setIsModalOpen] = useState<boolean>(false);
-  const [isMoreImageModalOpen, setIsMoreImageModalOpen] = useState<boolean>(false);
+  const [isMoreImageModalOpen, setIsMoreImageModalOpen] =
+    useState<boolean>(false);
   const [selectedProject, setSelectedProject] = useState<any>(null);
   const [updateProject] = useUpdateProjectMutation();
 
@@ -33,7 +53,12 @@ const ProjectsPage = () => {
 
   return (
     <Container>
-      <Box display="flex" justifyContent="space-between" alignItems="center" my={4}>
+      <Box
+        display="flex"
+        justifyContent="space-between"
+        alignItems="center"
+        my={4}
+      >
         <Typography variant="h4">Projects</Typography>
         <Button variant="contained" color="primary" onClick={handleCreate}>
           Create New
@@ -42,7 +67,10 @@ const ProjectsPage = () => {
       <Grid container spacing={3}>
         {projects?.map((project: any) => (
           <Grid item xs={12} key={project._id}>
-            <Card variant="outlined" sx={{ height: '100%', display: 'flex', flexDirection: 'column' }}>
+            <Card
+              variant="outlined"
+              sx={{ height: "100%", display: "flex", flexDirection: "column" }}
+            >
               <CardMedia
                 component="img"
                 alt={project.title}
@@ -51,9 +79,12 @@ const ProjectsPage = () => {
                 sx={{ height: 200 }} // Set a standard height for the cover image
               />
               <CardContent>
-                <Typography variant="h5" gutterBottom>{project.title}</Typography>
+                <Typography variant="h5" gutterBottom>
+                  {project.title}
+                </Typography>
                 <Typography variant="body1" color="textSecondary" component="p">
-                  <strong>Technologies:</strong> {project.technologies.join(', ')}
+                  <strong>Technologies:</strong>{" "}
+                  {project.technologies.join(", ")}
                 </Typography>
                 <Typography variant="body1" color="textSecondary" component="p">
                   <strong>Frontend Link:</strong> {project.links.frontEnd}
@@ -68,7 +99,13 @@ const ProjectsPage = () => {
                   <strong>Description:</strong> {project.description.text}
                 </Typography>
               </CardContent>
-              <Box mt={2} flexGrow={1} display="flex" justifyContent="center" alignItems="flex-end">
+              <Box
+                mt={2}
+                flexGrow={1}
+                display="flex"
+                justifyContent="center"
+                alignItems="flex-end"
+              >
                 {project.images && (
                   <Grid container spacing={1}>
                     {project.images.map((image: string, index: number) => (
@@ -78,7 +115,11 @@ const ProjectsPage = () => {
                           alt={`Image ${index + 1}`}
                           image={image}
                           title={`Image ${index + 1}`}
-                          sx={{ height: 100, width: '100%', objectFit: 'cover' }}
+                          sx={{
+                            height: 100,
+                            width: "100%",
+                            objectFit: "cover",
+                          }}
                         />
                       </Grid>
                     ))}
@@ -86,12 +127,20 @@ const ProjectsPage = () => {
                 )}
               </Box>
               <Box mt={2} mb={2} display="flex" justifyContent="center">
-                <Button variant="outlined" color="secondary" onClick={() => handleAddmoreImage(project)}>
+                <Button
+                  variant="outlined"
+                  color="secondary"
+                  onClick={() => handleAddmoreImage(project)}
+                >
                   Add image to gallery
                 </Button>
               </Box>
               <Box mb={5} display="flex" justifyContent="center">
-                <Button variant="outlined" color="secondary" onClick={() => handleEdit(project)}>
+                <Button
+                  variant="outlined"
+                  color="secondary"
+                  onClick={() => handleEdit(project)}
+                >
                   Edit
                 </Button>
               </Box>
