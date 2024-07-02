@@ -5,11 +5,14 @@ import { TMeta } from "@/types/common";
 export const projectApi = baseApi.injectEndpoints({
   endpoints: (build) => ({
     createProject: build.mutation({
-      query: (data) => ({
-        url: "/projects",
-        method: "POST",
-        data,
-      }),
+      query: (formatted) => {
+        console.log(formatted)
+        return {
+          url: "/projects",
+          method: "POST",
+         data: formatted.data,
+        }
+      },
       invalidatesTags: [tagTypes.projects],
     }),
 
@@ -41,11 +44,14 @@ export const projectApi = baseApi.injectEndpoints({
     }),
 
     updateProject: build.mutation({
-      query: (data) => ({
-        url: `/projects/${data.id}`,
-        method: "PATCH",
-        data: data.body,
-      }),
+      query: (formatted) => {
+       console.log(formatted,formatted.id)
+        return {
+          url: `/projects/${formatted.id}`,
+          method: "PATCH",
+          data: formatted.data,
+        }
+      },
       invalidatesTags: [tagTypes.projects],
     }),
     deleteProject: build.mutation({

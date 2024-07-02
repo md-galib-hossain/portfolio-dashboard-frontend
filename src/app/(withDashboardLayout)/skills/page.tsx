@@ -18,10 +18,18 @@ const SkillsPage = () => {
     setIsModalOpen(true);
   };
 
+  const handleCreate = () => {
+    setSelectedSkill(null); // Clear selected skill for creating new
+    setIsModalOpen(true);
+  };
+
   return (
     <Container>
       <Box display="flex" justifyContent="space-between" alignItems="center" my={4}>
         <Typography variant="h4">Skills</Typography>
+        <Button variant="contained" color="primary" onClick={handleCreate}>
+          Create New
+        </Button>
       </Box>
       <Grid container spacing={2}>
         {skills?.map((skill: any) => (
@@ -45,14 +53,12 @@ const SkillsPage = () => {
           </Grid>
         ))}
       </Grid>
-      {selectedSkill && (
-        <SkillModal
-          open={isModalOpen}
-          setOpen={setIsModalOpen}
-          skill={selectedSkill}
-          isSuccess={isSuccess}
-        />
-      )}
+      <SkillModal
+        open={isModalOpen}
+        setOpen={setIsModalOpen}
+        skill={selectedSkill}
+        isSuccess={isSuccess}
+      />
     </Container>
   );
 };

@@ -7,7 +7,7 @@ import { z } from 'zod';
 import GBInput from '@/components/Forms/GBInput';
 import GBForm from '@/components/Forms/GBForm';
 import GBModal from '@/components/GBModal/GBModal';
-import { useUpdateSocialMutation } from '@/redux/api/socialAPi';
+import { useCreateSocialMutation, useUpdateSocialMutation } from '@/redux/api/socialAPi';
 
 const validationSchema = z.object({
   name: z.string().optional(),
@@ -16,25 +16,34 @@ const validationSchema = z.object({
 
 const SocialModal = ({ open, setOpen, social, isSuccess }: any) => {
   const [defaultValues, setDefaultValues] = useState<FieldValues>({});
+  const [isCreating, setIsCreating] = useState<boolean>(false);
   const [updateSocial] = useUpdateSocialMutation(); 
+  const [createSocial] = useCreateSocialMutation(); 
 
   useEffect(() => {
     if (isSuccess && social) {
       setDefaultValues(social);
+    } else {
+      setDefaultValues({}); 
     }
+    setIsCreating(!social); 
   }, [isSuccess, social]);
 
   const submitHandler = async (values: FieldValues) => {
     try {
-      await updateSocial({ ...values, id: social._id }).unwrap(); 
+      if (isCreating) {
+        await createSocial(values).unwrap();
+      } else {
+        await updateSocial({ ...values, id: social._id }).unwrap(); 
+      }
       setOpen(false);
     } catch (error) {
-      console.error('Failed to update social profile', error);
+      console.error('Failed to save social profile', error);
     }
   };
 
   return (
-    <GBModal open={open} setOpen={setOpen} title="Edit Social Profile">
+    <GBModal open={open} setOpen={setOpen} title={isCreating ? 'Create Social Profile' : 'Edit Social Profile'}>
       <GBForm
         onSubmit={submitHandler}
         resolver={zodResolver(validationSchema)}

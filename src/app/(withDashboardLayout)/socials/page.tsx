@@ -18,10 +18,18 @@ const SocialsPage = () => {
     setIsModalOpen(true);
   };
 
+  const handleCreate = () => {
+    setSelectedSocial(null); // Clear selected social for creating new
+    setIsModalOpen(true);
+  };
+
   return (
     <Container>
       <Box display="flex" justifyContent="space-between" alignItems="center" my={4}>
         <Typography variant="h4">Social Profiles</Typography>
+        <Button variant="contained" color="primary" onClick={handleCreate}>
+          Create New
+        </Button>
       </Box>
       <Grid container spacing={2}>
         {socials?.map((social: any) => (
@@ -40,14 +48,12 @@ const SocialsPage = () => {
           </Grid>
         ))}
       </Grid>
-      {selectedSocial && (
-        <SocialModal
-          open={isModalOpen}
-          setOpen={setIsModalOpen}
-          social={selectedSocial}
-          isSuccess={isSuccess}
-        />
-      )}
+      <SocialModal
+        open={isModalOpen}
+        setOpen={setIsModalOpen}
+        social={selectedSocial}
+        isSuccess={isSuccess}
+      />
     </Container>
   );
 };

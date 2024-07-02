@@ -4,11 +4,14 @@ import { baseApi } from "./baseApi";
 export const socialApi = baseApi.injectEndpoints({
   endpoints: (build) => ({
     createSocial: build.mutation({
-      query: (data) => ({
-        url: "/socials",
-        method: "POST",
-        data,
-      }),
+      query: (data) => {
+        console.log(data)
+        return {
+          url: "/socials",
+          method: "POST",
+          data,
+        }
+      },
       invalidatesTags: [tagTypes.social],
     }),
 

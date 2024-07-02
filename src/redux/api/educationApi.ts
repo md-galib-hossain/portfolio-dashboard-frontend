@@ -40,10 +40,10 @@ export const educationApi = baseApi.injectEndpoints({
     }),
 
     updateEducations: build.mutation({
-      query: (data) => ({
-        url: `/educations/${data.id}`,
+      query: ({id,...values}) => ({
+        url: `/educations/${id}`,
         method: "PATCH",
-        data: data.body,
+        data: values,
       }),
       invalidatesTags: [tagTypes.education],
     }),

@@ -4,11 +4,14 @@ import { baseApi } from "./baseApi";
 export const blogApi = baseApi.injectEndpoints({
   endpoints: (build) => ({
     createBlogs: build.mutation({
-      query: (data) => ({
-        url: "/blogs",
-        method: "POST",
-        data,
-      }),
+      query: (data) => {
+        console.log(data)
+        return {
+          url: "/blogs",
+          method: "POST",
+          data: data.data,
+        }
+      },
       invalidatesTags: [tagTypes.blogs],
     }),
 
@@ -40,11 +43,14 @@ export const blogApi = baseApi.injectEndpoints({
     }),
 
     updateBlogs: build.mutation({
-      query: (data) => ({
-        url: `/blogs/${data.id}`,
-        method: "PATCH",
-        data: data.body,
-      }),
+      query: (data) => {
+        console.log(data)
+        return {
+          url: `/blogs/${data.id}`,
+          method: "PATCH",
+          data: data.data,
+        }
+      },
       invalidatesTags: [tagTypes.blogs],
     }),
     deleteBlog: build.mutation({
