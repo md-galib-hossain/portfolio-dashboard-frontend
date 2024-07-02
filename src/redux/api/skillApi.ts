@@ -40,11 +40,14 @@ export const skillApi = baseApi.injectEndpoints({
     }),
 
     updateSkill: build.mutation({
-      query: (data) => ({
-        url: `/skills/${data.id}`,
-        method: "PATCH",
-        data: data.body,
-      }),
+      query: ({id,...data}) => {
+        console.log("daddddddddddddddddddddta")
+        return {
+          url: `/skills/${id}`,
+          method: "PATCH",
+          data: data,
+        }
+      },
       invalidatesTags: [tagTypes.skills],
     }),
     deleteSkill: build.mutation({
